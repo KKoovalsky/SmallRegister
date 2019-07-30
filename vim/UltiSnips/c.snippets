@@ -1,0 +1,342 @@
+snippet fdoxyh
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.h', 'title')`}
+ * @brief	$0
+ * @author	Kacper Kowalski - $2
+ */
+endsnippet
+
+snippet fdoxyc
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.c', 'title')`}
+ * @brief	$0
+ * @author	Kacper Kowalski - $2
+ */
+endsnippet
+
+snippet fdoxyhpp
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.hpp', 'title')`}
+ * @brief	$0
+ * @author	Kacper Kowalski - $2
+ */
+endsnippet
+
+snippet fdoxycpp
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.cpp', 'title')`}
+ * @brief	$0
+ * @author	Kacper Kowalski - $2
+ */
+endsnippet
+
+snippet fdoxydefgroup "Doxygen defgroup tag"
+/**
+ * @defgroup $1	$2
+ * @brief $3
+ * @{
+ */
+$4
+/** @} */ // End of group $1
+endsnippet
+
+snippet muftest
+MU_TEST($1)
+{
+    $0
+}
+
+MU_TEST_SUITE($2)
+{
+    MU_RUN_TEST($1);
+}
+
+void ${3:`!v vim_snippets#Filename('$1', 'title')`}()
+{
+    MU_RUN_SUITE($2);
+    MU_REPORT();
+}
+endsnippet
+
+snippet iguard "Include header once only guard"
+#ifndef ${2:`!p
+if not snip.c:
+	import string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	snip.rv = ('%s' % (name)).upper()
+else:
+	snip.rv = snip.c`}
+#define $2
+
+${VISUAL}$1
+
+#endif /* $2 */
+endsnippet
+
+snippet fornobr "For without brackets"
+for (int ${2:i} = 0; $2 < ${1:count}; ${3:++}$2)
+	${4}
+endsnippet
+
+snippet fcommentruler "Comment rulers used to separate code"
+// --------------------------------------------------------------------------------------------------------------------
+// $0
+// --------------------------------------------------------------------------------------------------------------------
+endsnippet
+
+snippet cfiletemplate
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.c', 'title')`}
+ * @brief	$2
+ * @author	Kacper Kowalski - $3
+ */
+$0
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITIONS OF STRUCTURES, DATA TYPES, ...
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DECLARATION OF PRIVATE FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PUBLIC FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PRIVATE FUNCTIONS
+// --------------------------------------------------------------------------------------------------------------------
+
+endsnippet
+
+snippet hfiletemplate
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.h', 'title')`}
+ * @brief	$3
+ * @author	Kacper Kowalski - $4
+ */
+
+#ifndef ${2:`!p
+if not snip.c:
+	import string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	snip.rv = ('%s' % (name)).upper()
+else:
+	snip.rv = snip.c`}
+#define $2
+
+${VISUAL}$0
+
+#endif /* $2 */
+endsnippet
+
+snippet hppfiletemplate
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.hpp', 'title')`}
+ * @brief	$3
+ * @author	Kacper Kowalski - $4
+ */
+
+#ifndef ${2:`!p
+if not snip.c:
+	import string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	snip.rv = ('%s' % (name)).upper()
+else:
+	snip.rv = snip.c`}
+#define $2
+
+${VISUAL}$0
+
+#endif /* $2 */
+endsnippet
+snippet ctestfiletemplate
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1.', 'title')`}`!v expand('%:e')`
+ * @brief	$2
+ * @author	Kacper Kowalski - $4
+ */
+#include "unity.h"
+$0
+// --------------------------------------------------------------------------------------------------------------------
+// DECLARATION OF THE TEST CASES
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DECLARATION OF PRIVATE FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// EXECUTION OF THE TESTS
+// --------------------------------------------------------------------------------------------------------------------
+void test_$3()
+{
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF THE TEST CASES
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PRIVATE FUNCTIONS
+// --------------------------------------------------------------------------------------------------------------------
+
+endsnippet
+
+snippet freertos_inc_task
+#include "FreeRTOS.h"
+#include "task.h"
+$0
+endsnippet
+
+snippet privatecfunction
+static void $1();
+static void $1()
+{
+}
+endsnippet
+
+snippet dynks_iot_creds
+#ifdef $1
+#define IOT_SERVER_HOSTNAME "$2$3"
+#define URI_PATH1 "v1"
+#define URI_PATH2 "$4"
+#define URI_PATH3 "data"
+#define TENANT "$2"
+#define ID "$5"
+#endif /* $1 */
+$0
+endsnippet
+
+snippet dynks_impulse_cnt_test_data
+
+// --------------------------------------------------------------------------------------------------------------------
+// $0
+// --------------------------------------------------------------------------------------------------------------------
+
+const float_type $1_x [] = {
+
+};
+
+const float_type $1_y [] = {
+
+};
+
+const float_type $1_z [] = {
+
+};
+
+const struct impulse_cnt_test_struct $1 = {
+	.x = $1_x,
+	.y = $1_y,
+	.z = $1_z,
+	.size = array_len($1_x),
+    .num_impulses_in_signal = $2};
+
+endsnippet
+
+snippet dynks_impulse_cnt_test_data_no_xyz_arrays
+
+// --------------------------------------------------------------------------------------------------------------------
+// $3
+// --------------------------------------------------------------------------------------------------------------------
+
+$0
+
+const struct impulse_cnt_test_struct $1 = {
+	.x = $1_x,
+	.y = $1_y,
+	.z = $1_z,
+	.size = array_len($1_x),
+    .num_impulses_in_signal = $2};
+
+endsnippet
+
+snippet frtos_cpp_file
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1')`}.cpp
+ * @brief	$2
+ * @author	Kacper Kowalski - $3
+ */
+#include "FreeRTOS.h"
+#include "task.h"
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITIONS OF STRUCTURES, DATA TYPES, ...
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DECLARATION OF PRIVATE FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+static void $1_task(void *);
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PUBLIC FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+extern "C" void init_$1()
+{
+    xTaskCreate($1_task, "$1", 256, NULL, 1, NULL);
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PRIVATE FUNCTIONS
+// --------------------------------------------------------------------------------------------------------------------
+static void $1_task(void *)
+{
+    $0
+    for(;;)
+    {
+    }
+}
+endsnippet
+
+snippet frtos_c_file
+/**
+ * @file	${1:`!v vim_snippets#Filename('$1')`}.c
+ * @brief	$2
+ * @author	Kacper Kowalski - $3
+ */
+#include "FreeRTOS.h"
+#include "task.h"
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITIONS OF STRUCTURES, DATA TYPES, ...
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// DECLARATION OF PRIVATE FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+static void $1_task(void *params);
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PUBLIC FUNCTIONS AND VARIABLES
+// --------------------------------------------------------------------------------------------------------------------
+void init_$1()
+{
+    xTaskCreate($1_task, "$1", 256, NULL, 1, NULL);
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// DEFINITION OF PRIVATE FUNCTIONS
+// --------------------------------------------------------------------------------------------------------------------
+static void $1_task(void *params)
+{
+    $0
+    for(;;)
+    {
+    }
+    (void) params;
+}
+endsnippet
+
+snippet mailwork
+kacper.kowalski@lerta.energy
+endsnippet
+
+snippet mailprivate
+kacper.s.kowalski@gmail.com
+endsnippet
+
+snippet unittestdecl
+static void UNIT_TEST_$0();
+endsnippet
