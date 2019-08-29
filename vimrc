@@ -51,8 +51,6 @@ set smarttab
 
 :imap jk <Esc>
 
-:colorscheme torte
-
 let g:netrw_banner = 0
 
 " Set this shortcuts to easily navigate through panes
@@ -84,9 +82,12 @@ inoremap <C-t> <Esc>:tabnew<CR>:Explore<CR>
 set number
 " Set its width
 set numberwidth=2
-" Set colors for the bar
+" Enable 256 color palette
 set t_Co=256
-highlight LineNr term=bold cterm=NONE ctermfg=lightyellow ctermbg=darkgrey gui=NONE guifg=DarkGrey guibg=NONE
+
+:colorscheme desert
+" Set colors for the bar
+highlight LineNr term=bold cterm=NONE ctermfg=yellow ctermbg=darkgrey gui=NONE guifg=DarkGrey guibg=NONE
 
 " Add vertical rule
 set colorcolumn=120
