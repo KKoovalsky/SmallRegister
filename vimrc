@@ -24,6 +24,9 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'tpope/vim-fugitive'
 Plugin 'skywind3000/asyncrun.vim'
+Plugin 'vim-scripts/matrix.vim--Yang'
+Plugin 'tell-k/vim-autopep8'
+Plugin 'rafi/awesome-vim-colorschemes'
 
 " All of Plugins must be added before the following line
 call vundle#end()            " required
@@ -85,13 +88,13 @@ set numberwidth=2
 " Enable 256 color palette
 set t_Co=256
 
-:colorscheme desert
+:colorscheme onedark
 " Set colors for the bar
 highlight LineNr term=bold cterm=NONE ctermfg=yellow ctermbg=darkgrey gui=NONE guifg=DarkGrey guibg=NONE
 
 " Add vertical rule
-set colorcolumn=120
-highlight ColorColumn ctermbg=4
+set colorcolumn=80,120
+highlight ColorColumn ctermbg=236
 
 " UltiSnips shortcuts config
 let g:UltiSnipsExpandTrigger="<c-k>"
@@ -115,6 +118,7 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers=['flake8']
 
 let g:ycm_extra_conf_globlist = ['~/.vim/*','~/Workspace/AgriWatch/*','~/Workspace/Dynks*','~/Workspace/Blinker*','~/Workspace/Therm*','~/Workspace/Magnetoblinker*','~/Workspace/Beeblinker*']
 let g:ycm_max_diagnostics_to_display = 1000
@@ -166,6 +170,11 @@ nmap <F8> :TagbarToggle<CR>
 :let g:asyncrun_open = 14
 :let g:asyncrun_bell = 10
 nmap <F10> :AsyncRun 
+
+" =====================================================================================================================
+" Autopep config
+" =====================================================================================================================
+let g:autopep8_disable_show_diff=1
 
 " =====================================================================================================================
 " MACROS FOR C PROGRAMMING
