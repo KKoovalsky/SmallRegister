@@ -27,6 +27,8 @@ Plugin 'skywind3000/asyncrun.vim'
 Plugin 'vim-scripts/matrix.vim--Yang'
 Plugin 'tell-k/vim-autopep8'
 Plugin 'rafi/awesome-vim-colorschemes'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
 
 " All of Plugins must be added before the following line
 call vundle#end()            " required
@@ -120,7 +122,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers=['flake8']
 
-let g:ycm_extra_conf_globlist = ['~/.vim/*','~/Workspace/AgriWatch/*','~/Workspace/Dynks*','~/Workspace/Blinker*','~/Workspace/Therm*','~/Workspace/Magnetoblinker*','~/Workspace/Beeblinker*']
+let g:ycm_extra_conf_globlist = ['~/.vim/*','~/Workspace/AgriWatch/*','~/Workspace/Dynks*','~/Workspace/Blinker*','~/Workspace/Therm*','~/Workspace/Magnetoblinker*','~/Workspace/Beeblinker*', '~/Workspace/BeeBlinker*']
 let g:ycm_max_diagnostics_to_display = 1000
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
@@ -175,6 +177,13 @@ nmap <F10> :AsyncRun
 " Autopep config
 " =====================================================================================================================
 let g:autopep8_disable_show_diff=1
+
+" =====================================================================================================================
+" Easytags configuration
+" =====================================================================================================================
+let g:easytags_on_cursorhold = 0
+let g:easytags_async = 1
+let g:easytags_opts = ['-R','--c++-kinds=+p','--fields=+iaS','--extra=+q','--exclude=*.html','--exclude=*.js','--exclude=*.java','--exclude=*.xml']
 
 " =====================================================================================================================
 " MACROS FOR C PROGRAMMING
