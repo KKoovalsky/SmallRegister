@@ -9,26 +9,24 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
 Plugin 'vim-scripts/bash-support.vim'
 Plugin 'vim-scripts/bats.vim'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'kawaz/batscheck.vim'
-Plugin 'martinda/Jenkinsfile-vim-syntax'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'machakann/vim-highlightedyank'
 Plugin 'itchyny/lightline.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'rdnetto/YCM-Generator'
 Plugin 'tpope/vim-fugitive'
 Plugin 'skywind3000/asyncrun.vim'
-Plugin 'vim-scripts/matrix.vim--Yang'
 Plugin 'tell-k/vim-autopep8'
-Plugin 'rafi/awesome-vim-colorschemes'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
+" Plugin 'flazz/vim-colorschemes'
+Plugin 'dracula/vim', { 'name': 'dracula' }
 
 " All of Plugins must be added before the following line
 call vundle#end()            " required
@@ -133,6 +131,7 @@ let g:ycm_show_diagnostics_ui = 1
 let g:ycm_disable_for_files_larger_than_kb = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_always_populate_location_list = 1
+let g:ycm_clangd_binary_path = '/usr/bin/clangd-10'
 
 :nmap <c-i> :YcmCompleter GoToInclude<CR>
 :nmap <F3> :YcmCompleter GoToDefinition<CR>
