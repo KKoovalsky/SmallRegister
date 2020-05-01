@@ -1,30 +1,6 @@
-snippet fdoxyh
+snippet fdoxy
 /**
- * @file	${1:`!v vim_snippets#Filename('$1.h', 'title')`}
- * @brief	$0
- * @author	Kacper Kowalski - $2
- */
-endsnippet
-
-snippet fdoxyc
-/**
- * @file	${1:`!v vim_snippets#Filename('$1.c', 'title')`}
- * @brief	$0
- * @author	Kacper Kowalski - $2
- */
-endsnippet
-
-snippet fdoxyhpp
-/**
- * @file	${1:`!v vim_snippets#Filename('$1.hpp', 'title')`}
- * @brief	$0
- * @author	Kacper Kowalski - $2
- */
-endsnippet
-
-snippet fdoxycpp
-/**
- * @file	${1:`!v vim_snippets#Filename('$1.cpp', 'title')`}
+ * @file	${1:`!p snip.rv = snip.fn or "filename"`}
  * @brief	$0
  * @author	Kacper Kowalski - $2
  */
@@ -86,7 +62,7 @@ endsnippet
 
 snippet cfiletemplate
 /**
- * @file	${1:`!v vim_snippets#Filename('$1.c', 'title')`}
+ * @file	${1:`!p snip.rv = snip.fn or "filename"`}
  * @brief	$2
  * @author	Kacper Kowalski - $3
  */
@@ -111,7 +87,7 @@ endsnippet
 
 snippet hfiletemplate
 /**
- * @file	${1:`!v vim_snippets#Filename('$1.h', 'title')`}
+ * @file	${1:`!p snip.rv = snip.fn or "filename"`}
  * @brief	$3
  * @author	Kacper Kowalski - $4
  */
@@ -329,8 +305,12 @@ static void $1_task(void *params)
 }
 endsnippet
 
-snippet mailwork
-kacper.kowalski@lerta.energy
+snippet maillerta
+kacper.kowalski@etteplan.com
+endsnippet
+
+snippet mailette
+kacper.kowalski@etteplan.com
 endsnippet
 
 snippet mailprivate
@@ -339,4 +319,8 @@ endsnippet
 
 snippet unittestdecl
 static void UNIT_TEST_$0();
+endsnippet
+
+snippet cppalgo
+std::$1(std::begin($2), std::end($2), $0);
 endsnippet
