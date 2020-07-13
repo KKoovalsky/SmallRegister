@@ -324,3 +324,17 @@ endsnippet
 snippet cppalgo
 std::$1(std::begin($2), std::end($2), $0);
 endsnippet
+
+snippet cppnonmovable
+$1(const $1 &) = default;
+$1 &operator=(const $1 &) = default;
+$1($1 &&) = delete;
+$1 &operator=($1 &&) = delete;
+endsnippet
+
+snippet cppnonmovable-noncopyable
+$1(const $1 &) = delete;
+$1 &operator=(const $1 &) = delete;
+$1($1 &&) = delete;
+$1 &operator=($1 &&) = delete;
+endsnippet
