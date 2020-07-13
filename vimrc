@@ -23,9 +23,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'skywind3000/asyncrun.vim'
 Plugin 'tell-k/vim-autopep8'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
-" Plugin 'flazz/vim-colorschemes'
+Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'dracula/vim', { 'name': 'dracula' }
 
 " All of Plugins must be added before the following line
@@ -94,7 +92,7 @@ highlight LineNr term=bold cterm=NONE ctermfg=yellow ctermbg=darkgrey gui=NONE g
 
 " Add vertical rule
 set colorcolumn=80,120
-highlight ColorColumn ctermbg=236
+highlight ColorColumn ctermbg=240
 
 " UltiSnips shortcuts config
 let g:UltiSnipsExpandTrigger="<c-k>"
@@ -128,12 +126,10 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_show_diagnostics_ui = 1
-let g:ycm_disable_for_files_larger_than_kb = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_always_populate_location_list = 1
-let g:ycm_clangd_binary_path = '/usr/bin/clangd-10'
 
-:nmap <c-i> :YcmCompleter GoToInclude<CR>
+" :nmap <c-i> :YcmCompleter GoToInclude<CR>
 :nmap <F3> :YcmCompleter GoToDefinition<CR>
 :nmap <c-d> :YcmCompleter GoToDeclaration<CR>
 
@@ -178,13 +174,6 @@ nmap <F10> :AsyncRun
 let g:autopep8_disable_show_diff=1
 
 " =====================================================================================================================
-" Easytags configuration
-" =====================================================================================================================
-let g:easytags_on_cursorhold = 0
-let g:easytags_async = 1
-let g:easytags_opts = ['-R','--c++-kinds=+p','--fields=+iaS','--extra=+q','--exclude=*.html','--exclude=*.js','--exclude=*.java','--exclude=*.xml']
-
-" =====================================================================================================================
 " MACROS FOR C PROGRAMMING
 " =====================================================================================================================
 
@@ -194,3 +183,5 @@ let @g = 'V}k"ky/EXECUTION}kk"kp}kktUcRUN_TEST(jkV}:s/()/)/g/DEFINITION OF PR
 
 " Macro which makes definitions of C functions from declarations
 let @b = 'V}:s/;/{}\r/g:ClangFormat'
+
+:set wildmenu
