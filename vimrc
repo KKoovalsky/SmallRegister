@@ -185,3 +185,6 @@ let @g = 'V}k"ky/EXECUTION}kk"kp}kktUcRUN_TEST(jkV}:s/()/)/g/DEFINITION OF PR
 let @b = 'V}:s/;/{}\r/g:ClangFormat'
 
 :set wildmenu
+
+let g:autopep8_ignore="E402"
+let g:syntastic_python_flake8_args='--ignore=E402'
