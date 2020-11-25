@@ -21,12 +21,12 @@ TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_s
 
         SECTION("Bits are set correctly")
         {
-            REQUIRE(some_reg.set(bitfield<reg::one>{76}) == 76);
+            REQUIRE(some_reg.set(bitfield<reg::one>{76})() == 76);
         }
 
         SECTION("Zero is obtained when no bits set")
         {
-            REQUIRE(some_reg.set() == 0);
+            REQUIRE(some_reg.set()() == 0);
         }
 
         SECTION("Overflow is detected")
@@ -41,17 +41,17 @@ TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_s
 
         SECTION("Only first field is set")
         {
-            REQUIRE(some_reg.set(bitfield<reg::one>{0b11}) == 0b01100000);
+            REQUIRE(some_reg.set(bitfield<reg::one>{0b11})() == 0b01100000);
         }
 
         SECTION("Only second field is set")
         {
-            REQUIRE(some_reg.set(bitfield<reg::two>{0b00110}) == 0b00000110);
+            REQUIRE(some_reg.set(bitfield<reg::two>{0b00110})() == 0b00000110);
         }
 
         SECTION("Both fields are set")
         {
-            REQUIRE(some_reg.set(bitfield<reg::one>{0b010}, bitfield<reg::two>{0b01010}) == 0b01001010);
+            REQUIRE(some_reg.set(bitfield<reg::one>{0b010}, bitfield<reg::two>{0b01010})() == 0b01001010);
         }
     }
 
@@ -61,7 +61,7 @@ TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_s
 
         SECTION("All bitfields are set")
         {
-            REQUIRE(some_reg.set(bitfield<reg::one>{0b10}, bitfield<reg::two>{0b010}, bitfield<reg::three>{0b100})
+            REQUIRE(some_reg.set(bitfield<reg::one>{0b10}, bitfield<reg::two>{0b010}, bitfield<reg::three>{0b100})()
                     == 0b10010100);
         }
     }
@@ -72,7 +72,7 @@ TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_s
 
         SECTION("All bitfields are set")
         {
-            REQUIRE(some_reg.set(bitfield<reg::one>{0b10}, bitfield<reg::two>{0}, bitfield<reg::three>{0b100})
+            REQUIRE(some_reg.set(bitfield<reg::one>{0b10}, bitfield<reg::two>{0}, bitfield<reg::three>{0b100})()
                     == 0b10000100);
         }
     }
@@ -91,7 +91,8 @@ TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_s
 
         SECTION("Few are set")
         {
-            REQUIRE(some_reg.set(bitfield<reg::two>{1}, bitfield<reg::five>{1}, bitfield<reg::seven>{1}) == 0b01001010);
+            REQUIRE(some_reg.set(bitfield<reg::two>{1}, bitfield<reg::five>{1}, bitfield<reg::seven>{1})()
+                    == 0b01001010);
         }
     }
 

@@ -76,7 +76,7 @@ struct bitfield
 };
 
 template<typename... Bits>
-struct small_register
+class small_register
 {
   public:
     using Register = unsigned char;
@@ -123,6 +123,22 @@ struct small_register
         return (1 << bitsize) - 1;
     }
 
+    class proxy
+    {
+      public:
+        constexpr proxy(Register v) : underlying_value{v}
+        {
+        }
+
+        Register operator()() const
+        {
+            return underlying_value;
+        }
+
+      private:
+        Register underlying_value = {};
+    };
+
   public:
     template<auto BitfieldName>
     static inline constexpr Register set_bitfield(bitfield<BitfieldName> bitfield_value)
@@ -137,7 +153,7 @@ struct small_register
     }
 
     template<typename... BitfieldValues>
-    static constexpr inline Register set(BitfieldValues... bitfield_values)
+    static constexpr inline proxy set(BitfieldValues... bitfield_values)
     {
         return (set_bitfield(bitfield_values) | ... | 0);
     }
