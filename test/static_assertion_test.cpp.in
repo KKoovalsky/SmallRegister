@@ -1,0 +1,9 @@
+#include "helpers.hpp"
+#include "small_register/small_register.hpp"
+
+using namespace jungles;
+
+void static_assert_body()
+{
+    @SMALL_REGISTER_STATIC_ASSERT_TEST_BODY@ ;
+}
