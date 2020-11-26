@@ -23,6 +23,7 @@ macro (CreateSmallRegisterRuntimeTests)
     add_executable(SmallRegisterTests
         ${CMAKE_CURRENT_LIST_DIR}/single_byte_setting.cpp
         ${CMAKE_CURRENT_LIST_DIR}/single_byte_clearing.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/single_byte_clearing_whole_fields.cpp
         ${CMAKE_CURRENT_LIST_DIR}/mutating_register.cpp
     )
     target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
@@ -67,8 +68,28 @@ macro (CreateSmallRegisterCompileTimeTests)
         "small_register<bits<reg::one, 3>, bits<reg::two, 2>, bits<reg::one, 3>>{}"
         ".*Bitfield names must be unique.*")
 
-    SmallRegister_AddStaticAssertionTest(non_matched_bitfield_names_are_detected
+    SmallRegister_AddStaticAssertionTest(cant_set_nonexisting_fields_for_single_set_arguments
         "small_register<bits<reg::one, 3>, bits<reg::two, 5>> r; r.set(bitfield<reg::one>{0}, bitfield<reg::three>{1})"
+        ".*Bitfield name not found.*")
+
+    SmallRegister_AddStaticAssertionTest(cant_set_nonexisting_fields_for_multiple_set_arguments
+        "small_register<bits<reg::one, 3>, bits<reg::two, 5>> r; r.set(bitfield<reg::three>{1})"
+        ".*Bitfield name not found.*")
+
+    SmallRegister_AddStaticAssertionTest(cant_clear_nonexisting_fields
+        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear<reg::three>()"
+        ".*Bitfield name not found.*")
+    
+    SmallRegister_AddStaticAssertionTest(cant_clear_nonexisting_fields_when_supplying_multiple_arguments
+        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear<reg::two, reg::three, reg::one>()"
+        ".*Bitfield name not found.*")
+    
+    SmallRegister_AddStaticAssertionTest(cant_clear_individual_bits_in_nonexisting_fields
+        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear_individual_bits(bitfield<reg::three>{0})"
+        ".*Bitfield name not found.*")
+
+    SmallRegister_AddStaticAssertionTest(cant_clear_individual_bits_in_nonexisting_fields_for_multiple_args
+        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear_individual_bits(bitfield<reg::one>{0}, bitfield<reg::three>{0})"
         ".*Bitfield name not found.*")
 
 endmacro()

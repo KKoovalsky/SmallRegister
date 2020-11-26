@@ -13,7 +13,7 @@
 
 using namespace jungles;
 
-TEST_CASE("Bits are cleared in one byte size bitfield", "[small_register][one_byte_size][clear]")
+TEST_CASE("Individual bits are cleared in one byte size bitfield", "[small_register][one_byte_size][clear]")
 {
     SECTION("Non matching mask is detected correctly")
     {

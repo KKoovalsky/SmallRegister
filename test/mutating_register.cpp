@@ -49,7 +49,7 @@ TEST_CASE("Bits are mutated in the run", "[small_register][one_byte_size][mutate
             REQUIRE(rr() == 0b10000100);
         }
 
-        SECTION("For a long chain")
+        SECTION("For a long chain for individual bits")
         {
             SECTION("For chained operation")
             {
@@ -69,6 +69,29 @@ TEST_CASE("Bits are mutated in the run", "[small_register][one_byte_size][mutate
                 r.clear_individual_bits(bitfield<reg::two>{0b100}, bitfield<reg::three>{0b100});
 
                 REQUIRE(r() == 0b10011011);
+            }
+        }
+
+        SECTION("For a long chain for whole bitfields")
+        {
+            SECTION("For chained operation")
+            {
+                auto r{some_reg.set(bitfield<reg::one>{0b11}, bitfield<reg::two>{0b010}, bitfield<reg::three>{0b101})
+                           .clear<reg::one>()
+                           .set(bitfield<reg::one>{0b01}, bitfield<reg::three>{0b011})
+                           .clear<reg::two, reg::three>()};
+
+                REQUIRE(r() == 0b01000000);
+            }
+
+            SECTION("For procedural code")
+            {
+                auto r{some_reg.set(bitfield<reg::one>{0b11}, bitfield<reg::two>{0b010}, bitfield<reg::three>{0b101})};
+                r.clear<reg::one>();
+                r.set(bitfield<reg::one>{0b01}, bitfield<reg::three>{0b011});
+                r.clear<reg::two, reg::three>();
+
+                REQUIRE(r() == 0b01000000);
             }
         }
     }
