@@ -135,6 +135,8 @@ class small_register
     class proxy
     {
       public:
+        using Parent = small_register<Bits...>;
+
         constexpr proxy(Register v) : underlying_value{v}
         {
         }
@@ -147,7 +149,7 @@ class small_register
         template<typename... BitfieldValues>
         inline proxy& set(BitfieldValues... bitfield_values)
         {
-            auto v{small_register<Bits...>::set(bitfield_values...)};
+            auto v{Parent::set(bitfield_values...)};
             underlying_value |= v();
             return *this;
         }
@@ -155,7 +157,7 @@ class small_register
         template<typename... BitfieldValues>
         inline proxy& clear_individual_bits(BitfieldValues... bitfield_masks)
         {
-            auto mask{small_register<Bits...>::get_clearing_mask(bitfield_masks...)};
+            auto mask{Parent::get_clearing_mask(bitfield_masks...)};
             underlying_value &= mask();
             return *this;
         }
@@ -163,15 +165,15 @@ class small_register
         template<auto... BitfieldNames>
         inline proxy& clear()
         {
-            clear_individual_bits(small_register<Bits...>::get_mask<BitfieldNames>()...);
+            clear_individual_bits(Parent::get_mask<BitfieldNames>()...);
             return *this;
         }
 
         template<auto BitfieldName>
         inline Register get() const
         {
-            constexpr auto mask{small_register<Bits...>::get_maximum_value<BitfieldName>()};
-            constexpr auto shift{small_register<Bits...>::find_shift<BitfieldName>()};
+            constexpr auto mask{Parent::get_maximum_value<BitfieldName>()};
+            constexpr auto shift{Parent::find_shift<BitfieldName>()};
             return (underlying_value >> shift) & mask;
         }
 
