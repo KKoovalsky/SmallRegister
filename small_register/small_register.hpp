@@ -216,6 +216,11 @@ class small_register
         return (get_bitfield_clearing_mask(bitfield_values) & ... & ones_only);
     }
 
+    static inline constexpr proxy from_raw(Register raw_register)
+    {
+        return proxy{raw_register};
+    }
+
     struct overflow_error : std::exception
     {
     };

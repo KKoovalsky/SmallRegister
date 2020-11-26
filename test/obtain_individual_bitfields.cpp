@@ -10,7 +10,7 @@
 
 using namespace jungles;
 
-TEST_CASE("Individual bitfields are obtained", "[small_register][one_byte_size][clear]")
+TEST_CASE("Individual bitfields are obtained", "[small_register][one_byte_size][get]")
 {
     SECTION("When all bits are of size 1")
     {
