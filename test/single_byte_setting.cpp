@@ -13,7 +13,7 @@
 
 using namespace jungles;
 
-TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_size]")
+TEST_CASE("Bits are set in one byte size bitfield", "[small_register][one_byte_size][single_set]")
 {
     SECTION("Register contains one big bitfield")
     {

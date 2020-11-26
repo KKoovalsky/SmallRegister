@@ -22,6 +22,8 @@ endmacro()
 macro (CreateSmallRegisterRuntimeTests)
     add_executable(SmallRegisterTests
         ${CMAKE_CURRENT_LIST_DIR}/single_byte_setting.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/single_byte_clearing.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/mutating_register.cpp
     )
     target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
     target_compile_features(SmallRegisterTests PRIVATE cxx_std_17)

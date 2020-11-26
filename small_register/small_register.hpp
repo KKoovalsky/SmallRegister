@@ -135,6 +135,22 @@ class small_register
             return underlying_value;
         }
 
+        template<typename... BitfieldValues>
+        inline proxy& set(BitfieldValues... bitfield_values)
+        {
+            auto v{small_register<Bits...>::set(bitfield_values...)};
+            underlying_value |= v();
+            return *this;
+        }
+
+        template<typename... BitfieldValues>
+        inline proxy& clear_individual_bits(BitfieldValues... bitfield_masks)
+        {
+            auto mask{small_register<Bits...>::get_clearing_mask(bitfield_masks...)};
+            underlying_value &= mask();
+            return *this;
+        }
+
       private:
         Register underlying_value = {};
     };
@@ -158,7 +174,29 @@ class small_register
         return (set_bitfield(bitfield_values) | ... | 0);
     }
 
+    template<auto BitfieldName>
+    static inline constexpr Register get_bitfield_clearing_mask(bitfield<BitfieldName> bitfield_mask)
+    {
+        constexpr auto max_value{get_maximum_value<BitfieldName>()};
+        auto value{bitfield_mask.value};
+        if (value > max_value)
+            throw mask_not_matching_error{};
+
+        return ~set_bitfield(bitfield_mask);
+    }
+
+    template<typename... BitfieldValues>
+    static constexpr inline proxy get_clearing_mask(BitfieldValues... bitfield_values)
+    {
+        constexpr auto ones_only{~Register{}};
+        return (get_bitfield_clearing_mask(bitfield_values) & ... & ones_only);
+    }
+
     struct overflow_error : std::exception
+    {
+    };
+
+    struct mask_not_matching_error : std::exception
     {
     };
 };
