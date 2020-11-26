@@ -53,10 +53,22 @@ TEST_CASE("Bits are mutated in the run", "[small_register][one_byte_size][mutate
         {
             SECTION("For chained operation")
             {
+                auto r{some_reg.set(bitfield<reg::one>{0b11}, bitfield<reg::two>{0b010}, bitfield<reg::three>{0b101})
+                           .clear_individual_bits(bitfield<reg::one>{0b01}, bitfield<reg::three>{0b001})
+                           .set(bitfield<reg::two>{0b001}, bitfield<reg::three>{0b011})
+                           .clear_individual_bits(bitfield<reg::two>{0b100}, bitfield<reg::three>{0b100})};
+
+                REQUIRE(r() == 0b10011011);
             }
 
             SECTION("For procedural code")
             {
+                auto r{some_reg.set(bitfield<reg::one>{0b11}, bitfield<reg::two>{0b010}, bitfield<reg::three>{0b101})};
+                r.clear_individual_bits(bitfield<reg::one>{0b01}, bitfield<reg::three>{0b001});
+                r.set(bitfield<reg::two>{0b001}, bitfield<reg::three>{0b011});
+                r.clear_individual_bits(bitfield<reg::two>{0b100}, bitfield<reg::three>{0b100});
+
+                REQUIRE(r() == 0b10011011);
             }
         }
     }
