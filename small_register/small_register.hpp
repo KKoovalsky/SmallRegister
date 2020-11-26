@@ -125,7 +125,7 @@ class small_register
 
   public:
     template<auto BitfieldName>
-    static inline constexpr bitfield<BitfieldName> create_bitfield_with_all_bits_set()
+    static inline constexpr bitfield<BitfieldName> get_mask()
     {
         constexpr auto all_bits_set{get_maximum_value<BitfieldName>()};
         return bitfield<BitfieldName>{all_bits_set};
@@ -163,8 +163,16 @@ class small_register
         template<auto... BitfieldNames>
         inline proxy& clear()
         {
-            clear_individual_bits(small_register<Bits...>::create_bitfield_with_all_bits_set<BitfieldNames>()...);
+            clear_individual_bits(small_register<Bits...>::get_mask<BitfieldNames>()...);
             return *this;
+        }
+
+        template<auto BitfieldName>
+        inline Register get() const
+        {
+            constexpr auto mask{small_register<Bits...>::get_maximum_value<BitfieldName>()};
+            constexpr auto shift{small_register<Bits...>::find_shift<BitfieldName>()};
+            return (underlying_value >> shift) & mask;
         }
 
       private:

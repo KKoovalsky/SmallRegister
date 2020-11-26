@@ -26,6 +26,7 @@ macro (CreateSmallRegisterRuntimeTests)
         ${CMAKE_CURRENT_LIST_DIR}/single_byte_clearing_whole_fields.cpp
         ${CMAKE_CURRENT_LIST_DIR}/mutating_register.cpp
         ${CMAKE_CURRENT_LIST_DIR}/order_shall_not_matter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/obtain_individual_bitfields.cpp
     )
     target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
     target_compile_features(SmallRegisterTests PRIVATE cxx_std_17)
@@ -93,6 +94,10 @@ macro (CreateSmallRegisterCompileTimeTests)
         "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear_individual_bits(bitfield<reg::one>{0}, bitfield<reg::three>{0})"
         ".*Bitfield name not found.*")
 
+    SmallRegister_AddStaticAssertionTest(cant_get_nonexisting_fields
+        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().get<reg::three>()"
+        ".*Bitfield name not found.*")
+    
 endmacro()
 
 
