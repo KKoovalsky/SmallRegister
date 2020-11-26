@@ -27,6 +27,7 @@ macro (CreateSmallRegisterRuntimeTests)
         ${CMAKE_CURRENT_LIST_DIR}/mutating_register.cpp
         ${CMAKE_CURRENT_LIST_DIR}/order_shall_not_matter.cpp
         ${CMAKE_CURRENT_LIST_DIR}/obtain_individual_bitfields.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/abbreviated_forms.cpp
     )
     target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
     target_compile_features(SmallRegisterTests PRIVATE cxx_std_17)
