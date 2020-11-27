@@ -12,49 +12,10 @@
 #include <iterator>
 #include <stdexcept>
 
+#include "small_details.hpp"
+
 namespace jungles
 {
-
-namespace detail
-{
-template<class InputIt, class T>
-constexpr InputIt find(InputIt first, InputIt last, const T& value)
-{
-    for (; first != last; ++first)
-    {
-        if (*first == value)
-        {
-            return first;
-        }
-    }
-    return last;
-}
-
-template<class InputIt, class T>
-constexpr T accumulate(InputIt first, InputIt last, T init)
-{
-    for (; first != last; ++first)
-    {
-        init = std::move(init) + *first;
-    }
-    return init;
-}
-
-template<typename InputIt>
-constexpr bool has_unique(InputIt first, InputIt last)
-{
-    for (; first != last; ++first)
-    {
-        for (auto it{first + 1}; it != last; ++it)
-        {
-            if (*it == *first)
-                return false;
-        }
-    }
-    return true;
-}
-
-} // namespace detail
 
 template<auto EnumVal, std::size_t Size>
 struct bits

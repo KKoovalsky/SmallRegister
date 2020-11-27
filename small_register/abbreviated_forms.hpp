@@ -6,6 +6,7 @@
 #ifndef ABBREVIATED_FORMS_HPP
 #define ABBREVIATED_FORMS_HPP
 
+#include "small_register/small_map.hpp"
 #include "small_register/small_register.hpp"
 
 namespace jungles
@@ -15,6 +16,9 @@ using b = struct bits<EnumVal, Size>;
 
 template<auto Name>
 using bf = struct bitfield<Name>;
+
+template<uint8_t Address, typename SmallRegister>
+using e = struct element<Address, SmallRegister>;
 
 }; // namespace jungles
 
