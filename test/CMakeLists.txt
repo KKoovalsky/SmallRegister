@@ -19,24 +19,6 @@ macro(DownloadAndPopulateCatch2)
 endmacro()
 
 
-macro (CreateSmallRegisterRuntimeTests)
-    add_executable(SmallRegisterTests
-        ${CMAKE_CURRENT_LIST_DIR}/single_byte_setting.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/single_byte_clearing.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/single_byte_clearing_whole_fields.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/mutating_register.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/order_shall_not_matter.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/obtain_individual_bitfields.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/abbreviated_forms.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/mapping_old.cpp
-    )
-    target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
-    target_compile_features(SmallRegisterTests PRIVATE cxx_std_17)
-    target_compile_options(SmallRegisterTests PRIVATE -Wall -Wextra)
-    add_test(NAME SmallRegisterTestsRun COMMAND SmallRegisterTests)
-endmacro()
-
-
 macro (CreateSmallRegisterCompileTimeTests)
     include("${CMAKE_CURRENT_LIST_DIR}/static_assertions.cmake")
 
@@ -117,7 +99,6 @@ endmacro()
 
 
 DownloadAndPopulateCatch2()
-CreateSmallRegisterRuntimeTests()
 CreateSmallRegisterCompileTimeTests()
 CreateSmallRegisterRefinedRuntimeTimeTests()
 
