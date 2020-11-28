@@ -17,22 +17,19 @@ TEST_CASE("Bits are set", "[small_register][set]")
         using RegisterWithOneBigBitfield = small_register<uint8_t, bitfield<reg::one, 8>>;
         RegisterWithOneBigBitfield reg{};
 
-        SECTION("For single setting")
+        SECTION("Specified bits are set")
         {
-            SECTION("Specified bits are set")
-            {
-                REQUIRE(reg.set<reg::one>(0b01100000)() == 0b01100000);
-            }
+            REQUIRE(reg.set<reg::one>(0b01100000)() == 0b01100000);
+        }
 
-            SECTION("Whole bitfield is set when specified")
-            {
-                REQUIRE(reg.set<reg::one>(0xFF)() == 0xFF);
-            }
+        SECTION("Whole bitfield is set when specified")
+        {
+            REQUIRE(reg.set<reg::one>(0xFF)() == 0xFF);
+        }
 
-            SECTION("Whole bitfield is set when no bit specified")
-            {
-                REQUIRE(reg.set<reg::one>()() == 0xFF);
-            }
+        SECTION("Whole bitfield is set when no bit specified")
+        {
+            REQUIRE(reg.set<reg::one>()() == 0xFF);
         }
     }
 

@@ -113,6 +113,7 @@ macro (CreateSmallRegisterRefinedCompileTimeTests)
         ${CMAKE_CURRENT_LIST_DIR}/setting.cpp
         ${CMAKE_CURRENT_LIST_DIR}/getting.cpp
         ${CMAKE_CURRENT_LIST_DIR}/loading.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/clearing.cpp
     )
     target_link_libraries(SmallRegisterRefinedTests PRIVATE Catch2::Catch2WithMain SmallRegisterRefined)
     target_compile_features(SmallRegisterRefinedTests PRIVATE cxx_std_17)
