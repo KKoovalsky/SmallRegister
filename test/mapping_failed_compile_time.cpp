@@ -3,7 +3,7 @@
  * @brief	Test for static assertion is triggered on wrong register address supplied.
  * @author	Kacper Kowalski - kacper.s.kowalski@gmail.com
  */
-#include "small_register_refined/small_map.hpp"
+#include "small_register/small_map.hpp"
 
 #include "helpers.hpp"
 

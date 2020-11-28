@@ -4,7 +4,7 @@
  * @author	Kacper Kowalski - kacper.s.kowalski@gmail.com
  */
 #include "catch2/catch_test_macros.hpp"
-#include "small_register_refined/small_map.hpp"
+#include "small_register/small_map.hpp"
 
 #include "helpers.hpp"
 

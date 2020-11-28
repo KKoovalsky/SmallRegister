@@ -6,8 +6,8 @@
 #ifndef SMALL_MAP_HPP
 #define SMALL_MAP_HPP
 
-#include "small_register_refined/small_register.hpp"
-#include "small_register_refined/small_register_internal.hpp"
+#include "small_register/small_register.hpp"
+#include "small_register/small_register_internal.hpp"
 
 #include <array>
 #include <tuple>

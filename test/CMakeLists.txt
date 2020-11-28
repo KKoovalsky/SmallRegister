@@ -77,9 +77,8 @@ macro (CreateSmallRegisterCompileTimeTests)
 endmacro()
 
 
-macro (CreateSmallRegisterRefinedRuntimeTimeTests)
-
-    add_executable(SmallRegisterRefinedTests
+macro (CreateSmallRegisterRuntimeTimeTests)
+    add_executable(SmallRegisterTests
         ${CMAKE_CURRENT_LIST_DIR}/setting.cpp
         ${CMAKE_CURRENT_LIST_DIR}/getting.cpp
         ${CMAKE_CURRENT_LIST_DIR}/loading.cpp
@@ -87,10 +86,10 @@ macro (CreateSmallRegisterRefinedRuntimeTimeTests)
         ${CMAKE_CURRENT_LIST_DIR}/chaining.cpp
         ${CMAKE_CURRENT_LIST_DIR}/mapping.cpp
     )
-    target_link_libraries(SmallRegisterRefinedTests PRIVATE Catch2::Catch2WithMain SmallRegisterRefined)
-    target_compile_features(SmallRegisterRefinedTests PRIVATE cxx_std_17)
-    target_compile_options(SmallRegisterRefinedTests PRIVATE -Wall -Wextra)
-    add_test(NAME SmallRegisterRefinedTestsRun COMMAND SmallRegisterRefinedTests)
+    target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
+    target_compile_features(SmallRegisterTests PRIVATE cxx_std_17)
+    target_compile_options(SmallRegisterTests PRIVATE -Wall -Wextra)
+    add_test(NAME SmallRegisterTestsRun COMMAND SmallRegisterTests)
 endmacro()
 
 ################################################################################
@@ -100,5 +99,5 @@ endmacro()
 
 DownloadAndPopulateCatch2()
 CreateSmallRegisterCompileTimeTests()
-CreateSmallRegisterRefinedRuntimeTimeTests()
+CreateSmallRegisterRuntimeTimeTests()
 

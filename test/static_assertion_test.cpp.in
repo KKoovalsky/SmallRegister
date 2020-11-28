@@ -1,5 +1,5 @@
 #include "helpers.hpp"
-#include "small_register_refined/small_register.hpp"
+#include "small_register/small_register.hpp"
 
 using namespace jungles;
 

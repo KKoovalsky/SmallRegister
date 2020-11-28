@@ -3,7 +3,7 @@
  * @brief	Input for a test that checks whether static assertion fails when register IDs have various types.
  * @author	Kacper Kowalski - kacper.s.kowalski@gmail.com
  */
-#include "small_register_refined/small_map.hpp"
+#include "small_register/small_map.hpp"
 
 using namespace jungles;
 

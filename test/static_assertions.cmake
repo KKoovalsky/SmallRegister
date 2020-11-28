@@ -20,7 +20,7 @@ function(SmallRegister_AddStaticAssertionTestWithOwnFile name filename pass_rege
     add_executable(${test_name} ${filename})
 
     target_include_directories(${test_name} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
-    target_link_libraries(${test_name} PRIVATE SmallRegisterRefined)
+    target_link_libraries(${test_name} PRIVATE SmallRegister)
     set_target_properties(${test_name} PROPERTIES 
         EXCLUDE_FROM_ALL TRUE 
         EXCLUDE_FROM_DEFAULT_BUILD TRUE)

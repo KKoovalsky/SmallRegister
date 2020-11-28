@@ -8,7 +8,7 @@
 
 #include <stdexcept>
 
-#include "small_register_refined/small_register_internal.hpp"
+#include "small_register/small_register_internal.hpp"
 
 namespace jungles
 {
