@@ -72,6 +72,10 @@ class small_register
     }
 
   public:
+    small_register(Register initial_value = 0) : underlying_register{initial_value}
+    {
+    }
+
     template<auto Id>
     constexpr inline Self& set()
     {
