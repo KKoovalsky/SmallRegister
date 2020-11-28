@@ -107,6 +107,17 @@ macro (CreateSmallRegisterCompileTimeTests)
 endmacro()
 
 
+macro (CreateSmallRegisterRefinedCompileTimeTests)
+
+    add_executable(SmallRegisterRefinedTests
+        ${CMAKE_CURRENT_LIST_DIR}/setting.cpp
+    )
+    target_link_libraries(SmallRegisterRefinedTests PRIVATE Catch2::Catch2WithMain SmallRegisterRefined)
+    target_compile_features(SmallRegisterRefinedTests PRIVATE cxx_std_17)
+    target_compile_options(SmallRegisterRefinedTests PRIVATE -Wall -Wextra)
+    add_test(NAME SmallRegisterRefinedTestsRun COMMAND SmallRegisterRefinedTests)
+endmacro()
+
 ################################################################################
 # Main script
 ################################################################################
@@ -115,3 +126,5 @@ endmacro()
 DownloadAndPopulateCatch2()
 CreateSmallRegisterRuntimeTests()
 CreateSmallRegisterCompileTimeTests()
+CreateSmallRegisterRefinedCompileTimeTests()
+
