@@ -64,7 +64,7 @@ class small_register
     }
 
     template<auto Id>
-    static inline constexpr unsigned get_maximum_value()
+    static inline constexpr Register get_maximum_value()
     {
         auto sizes_it{find_corresponding_size<Id>()};
         auto bitsize{*sizes_it};
@@ -84,7 +84,7 @@ class small_register
     }
 
     template<auto Id>
-    constexpr inline Self& set(unsigned value)
+    constexpr inline Self& set(RegisterUnderlyingType value)
     {
         constexpr auto max_value{get_maximum_value<Id>()};
         if (value > max_value)
@@ -96,7 +96,7 @@ class small_register
     }
 
     template<auto Id>
-    constexpr inline unsigned get()
+    constexpr inline RegisterUnderlyingType get()
     {
         constexpr auto mask{get_maximum_value<Id>()};
         constexpr auto shift{find_shift<Id>()};
@@ -111,7 +111,7 @@ class small_register
     }
 
     template<auto Id>
-    constexpr inline Self& clear(unsigned mask)
+    constexpr inline Self& clear(RegisterUnderlyingType mask)
     {
         constexpr auto strongest_mask{get_maximum_value<Id>()};
         if (mask > strongest_mask)

@@ -15,6 +15,9 @@ macro(CreateMainRefinedTarget)
     add_library(SmallRegisterRefined INTERFACE)
     target_include_directories(SmallRegisterRefined INTERFACE ${CMAKE_CURRENT_LIST_DIR})
     target_compile_features(SmallRegisterRefined INTERFACE cxx_std_17)
+    
+    # TODO static test that
+    target_compile_options(SmallRegisterRefined INTERFACE -Werror=overflow)
 endmacro()
 
 ################################################################################

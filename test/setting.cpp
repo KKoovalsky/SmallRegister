@@ -14,7 +14,6 @@ TEST_CASE("Bits are set", "[small_register][set]")
 {
     SECTION("For one big bitfield")
     {
-        // TODO: constructor takes raw value received on the wire (0 by default)
         using RegisterWithOneBigBitfield = small_register<uint8_t, bitfield<reg::one, 8>>;
         RegisterWithOneBigBitfield reg{};
 
@@ -33,11 +32,6 @@ TEST_CASE("Bits are set", "[small_register][set]")
             SECTION("Whole bitfield is set when no bit specified")
             {
                 REQUIRE(reg.set<reg::one>()() == 0xFF);
-            }
-
-            SECTION("Overflow is detected")
-            {
-                REQUIRE_THROWS(reg.set<reg::one>(0b100000000));
             }
         }
     }
