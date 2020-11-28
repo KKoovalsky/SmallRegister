@@ -28,7 +28,7 @@ macro (CreateSmallRegisterRuntimeTests)
         ${CMAKE_CURRENT_LIST_DIR}/order_shall_not_matter.cpp
         ${CMAKE_CURRENT_LIST_DIR}/obtain_individual_bitfields.cpp
         ${CMAKE_CURRENT_LIST_DIR}/abbreviated_forms.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/mapping.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/mapping_old.cpp
     )
     target_link_libraries(SmallRegisterTests PRIVATE Catch2::Catch2WithMain SmallRegister)
     target_compile_features(SmallRegisterTests PRIVATE cxx_std_17)
@@ -115,6 +115,7 @@ macro (CreateSmallRegisterRefinedCompileTimeTests)
         ${CMAKE_CURRENT_LIST_DIR}/loading.cpp
         ${CMAKE_CURRENT_LIST_DIR}/clearing.cpp
         ${CMAKE_CURRENT_LIST_DIR}/chaining.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/mapping.cpp
     )
     target_link_libraries(SmallRegisterRefinedTests PRIVATE Catch2::Catch2WithMain SmallRegisterRefined)
     target_compile_features(SmallRegisterRefinedTests PRIVATE cxx_std_17)

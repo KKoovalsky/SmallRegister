@@ -72,7 +72,7 @@ class small_register
     }
 
   public:
-    small_register(Register initial_value = 0) : underlying_register{initial_value}
+    constexpr small_register(Register initial_value = 0) : underlying_register{initial_value}
     {
     }
 

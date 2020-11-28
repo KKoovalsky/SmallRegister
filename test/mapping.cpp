@@ -4,39 +4,45 @@
  * @author	Kacper Kowalski - kacper.s.kowalski@gmail.com
  */
 #include "catch2/catch_test_macros.hpp"
-#include "small_register/small_map.hpp"
+#include "small_register_refined/small_map.hpp"
 
 #include "helpers.hpp"
+
+#include <boost/type_index.hpp>
 
 using namespace jungles;
 
 enum class reg1
 {
-    bits1,
-    bits2,
-    bits3
+    bitfield1,
+    bitfield2,
+    bitfield3,
+    bitfield4,
 };
 
 enum class reg2
 {
-    bits1,
-    bits2,
-    bits3
+    bitfield1,
+    bitfield2,
+    bitfield3
 };
 
 TEST_CASE("Mapping of registers can be performed", "[small_register][small_map]")
 {
-    SECTION("Simple map with two registers")
+    SECTION("Access map with two registers")
     {
-        using Reg1 = small_register<bits<reg1::bits1, 2>, bits<reg1::bits2, 3>, bits<reg1::bits3, 3>>;
-        using Reg2 = small_register<bits<reg2::bits1, 2>, bits<reg2::bits2, 4>, bits<reg2::bits3, 2>>;
+        using Reg1 = small_register<uint8_t,
+                                    bitfield<reg1::bitfield1, 2>,
+                                    bitfield<reg1::bitfield2, 3>,
+                                    bitfield<reg1::bitfield3, 3>>;
+        using Reg2 = small_register<uint8_t,
+                                    bitfield<reg2::bitfield1, 2>,
+                                    bitfield<reg2::bitfield2, 4>,
+                                    bitfield<reg2::bitfield3, 2>>;
 
-        static constexpr small_map<element<0x01, Reg1>, element<0x02, Reg2>> some_map;
+        using MemoryMap = small_map<element<0x01, Reg1>, element<0x02, Reg2>>;
 
-        static constexpr auto r1{some_map.get_register<0x01>()};
-        static constexpr auto r2{some_map.get_register<0x02>()};
-
-        REQUIRE(r1.set(bitfield<reg1::bits2>{0b111})() == 0b00111000);
-        REQUIRE(r2.set(bitfield<reg2::bits2>{0b1111})() == 0b00111100);
+        REQUIRE(std::is_same_v<MemoryMap::register_from_address<0x01>::type, Reg1>);
+        REQUIRE(std::is_same_v<MemoryMap::register_from_address<0x02>::type, Reg2>);
     }
 }
