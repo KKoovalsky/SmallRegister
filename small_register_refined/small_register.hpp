@@ -38,7 +38,7 @@ class small_register
     static inline constexpr std::array sizes{Bitfields::size...};
     static inline constexpr unsigned accumulated_size{detail::accumulate(std::begin(sizes), std::end(sizes), 0)};
 
-    static_assert(accumulated_size == bit_size, "Accumulated bit-size must be 8");
+    static_assert(accumulated_size == bit_size, "Whole register must be allocated");
     static_assert(detail::has_unique(std::begin(ids), std::end(ids)), "Bitfield IDs must be unique");
 
     template<auto Id>
