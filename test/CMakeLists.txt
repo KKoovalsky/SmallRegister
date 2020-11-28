@@ -41,73 +41,61 @@ macro (CreateSmallRegisterCompileTimeTests)
     include("${CMAKE_CURRENT_LIST_DIR}/static_assertions.cmake")
 
     SmallRegister_AddStaticAssertionTest(all_bits_must_be_allocated1
-        "small_register<bits<reg::one, 1>>{}"
-        ".*Accumulated bit-size must be 8.*")
+        "small_register<uint8_t, bitfield<reg::one, 1>>{}"
+        ".*Whole register must be allocated.*")
 
     SmallRegister_AddStaticAssertionTest(all_bits_must_be_allocated2
-        "small_register<bits<reg::one, 4>>{}"
-        ".*Accumulated bit-size must be 8.*")
+        "small_register<uint8_t, bitfield<reg::one, 4>>{}"
+        ".*Whole register must be allocated.*")
 
     SmallRegister_AddStaticAssertionTest(all_bits_must_be_allocated3
-        "small_register<bits<reg::one, 4>, bits<reg::two, 3>>{}"
-        ".*Accumulated bit-size must be 8.*")
+        "small_register<uint8_t, bitfield<reg::one, 4>, bitfield<reg::two, 3>>{}"
+        ".*Whole register must be allocated.*")
 
     SmallRegister_AddStaticAssertionTest(all_bits_must_be_allocated4
-        "small_register<bits<reg::one, 3>, bits<reg::two, 3>, bits<reg::three, 1>>{}"
-        ".*Accumulated bit-size must be 8.*")
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::two, 3>, bitfield<reg::three, 1>>{}"
+        ".*Whole register must be allocated.*")
 
     SmallRegister_AddStaticAssertionTest(all_bits_must_be_allocated5
-        "small_register<bits<reg::one, 3>, bits<reg::two, 4>, bits<reg::three, 2>>{}"
-        ".*Accumulated bit-size must be 8.*")
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::two, 4>, bitfield<reg::three, 2>>{}"
+        ".*Whole register must be allocated.*")
 
     SmallRegister_AddStaticAssertionTest(all_bits_must_be_allocated6
-        "small_register<bits<reg::one, 9>>{}"
-        ".*Accumulated bit-size must be 8.*")
+        "small_register<uint8_t, bitfield<reg::one, 9>>{}"
+        ".*Whole register must be allocated.*")
 
     SmallRegister_AddStaticAssertionTest(no_duplicates_in_bitfield_names1
-        "small_register<bits<reg::one, 3>, bits<reg::one, 5>>{}"
-        ".*Bitfield names must be unique.*")
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::one, 5>>{}"
+        ".*Bitfield IDs must be unique.*")
 
     SmallRegister_AddStaticAssertionTest(no_duplicates_in_bitfield_names2
-        "small_register<bits<reg::one, 3>, bits<reg::two, 2>, bits<reg::one, 3>>{}"
-        ".*Bitfield names must be unique.*")
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::two, 2>, bitfield<reg::one, 3>>{}"
+        ".*Bitfield IDs must be unique.*")
 
-    SmallRegister_AddStaticAssertionTest(cant_set_nonexisting_fields_for_single_set_arguments
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>> r; r.set(bitfield<reg::one>{0}, bitfield<reg::three>{1})"
-        ".*Bitfield name not found.*")
-
-    SmallRegister_AddStaticAssertionTest(cant_set_nonexisting_fields_for_multiple_set_arguments
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>> r; r.set(bitfield<reg::three>{1})"
-        ".*Bitfield name not found.*")
+    SmallRegister_AddStaticAssertionTest(cant_set_nonexisting_bitfield
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::two, 5>> r; r.set<reg::three>(); "
+        ".*Bitfield ID not found.*")
 
     SmallRegister_AddStaticAssertionTest(cant_clear_nonexisting_fields
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear<reg::three>()"
-        ".*Bitfield name not found.*")
-    
-    SmallRegister_AddStaticAssertionTest(cant_clear_nonexisting_fields_when_supplying_multiple_arguments
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear<reg::two, reg::three, reg::one>()"
-        ".*Bitfield name not found.*")
-    
-    SmallRegister_AddStaticAssertionTest(cant_clear_individual_bits_in_nonexisting_fields
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear_individual_bits(bitfield<reg::three>{0})"
-        ".*Bitfield name not found.*")
-
-    SmallRegister_AddStaticAssertionTest(cant_clear_individual_bits_in_nonexisting_fields_for_multiple_args
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().clear_individual_bits(bitfield<reg::one>{0}, bitfield<reg::three>{0})"
-        ".*Bitfield name not found.*")
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::two, 5>> r; r.clear<reg::three>(); "
+        ".*Bitfield ID not found.*")
 
     SmallRegister_AddStaticAssertionTest(cant_get_nonexisting_fields
-        "small_register<bits<reg::one, 3>, bits<reg::two, 5>>{}.set().get<reg::three>()"
-        ".*Bitfield name not found.*")
+        "small_register<uint8_t, bitfield<reg::one, 3>, bitfield<reg::two, 5>> r; r.get<reg::three>(); "
+        ".*Bitfield ID not found.*")
 
     SmallRegister_AddStaticAssertionTestWithOwnFile(cant_get_nonexisting_map_element
         ${CMAKE_CURRENT_LIST_DIR}/mapping_failed_compile_time.cpp
         ".*Register address not found.*")
 
+    SmallRegister_AddStaticAssertionTestWithOwnFile(cant_have_register_ids_with_various_types
+        ${CMAKE_CURRENT_LIST_DIR}/wrong_types_of_register_ids_compile_time.cpp
+        ".*bitfield::id types shall be the same.*")
+
 endmacro()
 
 
-macro (CreateSmallRegisterRefinedCompileTimeTests)
+macro (CreateSmallRegisterRefinedRuntimeTimeTests)
 
     add_executable(SmallRegisterRefinedTests
         ${CMAKE_CURRENT_LIST_DIR}/setting.cpp
@@ -131,5 +119,5 @@ endmacro()
 DownloadAndPopulateCatch2()
 CreateSmallRegisterRuntimeTests()
 CreateSmallRegisterCompileTimeTests()
-CreateSmallRegisterRefinedCompileTimeTests()
+CreateSmallRegisterRefinedRuntimeTimeTests()
 

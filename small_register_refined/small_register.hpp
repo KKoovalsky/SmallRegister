@@ -26,7 +26,6 @@ class small_register
   private:
     using AreTypesOfIdTheSame = detail::are_same<decltype(Bitfields::id)...>;
 
-    // TODO cmake test for that
     static_assert(AreTypesOfIdTheSame::value, "bitfield::id types shall be the same");
 
     using Register = RegisterUnderlyingType;
