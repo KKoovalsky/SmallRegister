@@ -91,10 +91,41 @@ class small_register
         return *this;
     }
 
+    template<auto Id>
+    constexpr inline unsigned get()
+    {
+        constexpr auto mask{get_maximum_value<Id>()};
+        constexpr auto shift{find_shift<Id>()};
+        return (underlying_register >> shift) & mask;
+    }
+
+    template<auto Id>
+    constexpr inline Self& clear()
+    {
+        constexpr auto mask{get_maximum_value<Id>()};
+        return clear<Id>(mask);
+    }
+
+    template<auto Id>
+    constexpr inline Self& clear(unsigned mask)
+    {
+        constexpr auto strongest_mask{get_maximum_value<Id>()};
+        if (mask > strongest_mask)
+            throw mask_not_matching_error{};
+
+        constexpr auto shift{find_shift<Id>()};
+        underlying_register &= ~(mask << shift);
+        return *this;
+    }
+
     constexpr RegisterUnderlyingType operator()() const
     {
         return underlying_register;
     }
+
+    struct mask_not_matching_error : std::exception
+    {
+    };
 
     struct overflow_error : std::exception
     {
