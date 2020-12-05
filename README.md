@@ -4,7 +4,7 @@ This library simplifies bitfield handling and adds some safety features, mostly 
 `SmallRegister` maps bitfields of registers in Big Endian order and allows easy read-out and setting/clearing 
 operations.
 
-C++17 is required to use it.
+C++17 is required to use it. The library is header-only.
 
 It's intended to be used with tiny sensor ICs from which the data is obtained through I2C, SPI, UART, ...
 
@@ -39,6 +39,7 @@ enum class status
     reserved2
 };
 
+using namespace jungles;
 using Status = small_register<uint8_t, // Defines the underlying type of the register. Can be uint8_t, uint16_t, ...
                               bitfield<status::reserved1, 2>, // First the ID of the register, and then its bit-size
                               bitfield<status::chg_stat, 2>,
@@ -186,3 +187,50 @@ e.g. when the bitfield is of size 5 bits and you want to set 6 bits an exception
 ChargeControl1 charge_control1_reg{};
 charge_control1_reg.set<charge_control1::icc>(0b100000); // throws overflow_error{}
 ```
+
+### Using small_map
+
+`SmallRegister` allows to map register addresses to corresponding register types, e.g.:
+
+```
+using MP2695MemoryMap = jungles::small_map<element<0x00, ChargeControl0>,
+                                           element<0x01, ChargeControl1>,
+                                           element<0x02, ChargeControl2>,
+                                           element<0x05, Status>,
+                                           element<0x06, Fault>,
+                                           element<0x07, Miscellaneous>,
+                                           element<0x08, Jeita>>;
+```
+
+Then the corresponding type can be accessed with:
+```
+using ChargeControl1 = typename MP2695MemoryMap::register_from_address<0x01>::type;
+
+```
+
+Provided that `ChargeControl0`, `ChargeControl1`, ... are type aliases for `jungles::small_register`.
+
+## Downloading and incorporating the library to a project
+
+The preferred way is to use `CMake`:
+
+```
+cmake_minimum_required(VERSION 3.16)
+
+include(FetchContent)
+FetchContent_Declare(SmallRegister
+    GIT_REPOSITORY https://github.com/KKoovalsky/SmallRegister.git
+    GIT_TAG main # Use the latest tag to be safe
+)
+FetchContent_MakeAvailable(SmallRegister)
+target_link_libraries(your_app PUBLIC SmallRegister)
+```
+
+You can use the library as a submodule as well or simply download the headers insided `small_register` directory.
+
+## API
+
+TODO: generate with `doxygen` and use `moxygen`
+
+
+
