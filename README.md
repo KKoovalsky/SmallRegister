@@ -22,7 +22,7 @@ Let's take [MP2695](https://www.monolithicpower.com/en/mp2695.html) IC on the ta
 From the datasheet we can see that it has a register addressed with `0x05H` value, called "Status register"
 and its layout looks like that:
 
-![MP2695 Status register](docs/mp2694_status_register.png)
+![MP2695 Status register](docs/mp2695_status_register.png)
 
 Let's map it using `SmallRegister`:
 
@@ -173,7 +173,7 @@ void MP2695::change_charge_current_to_3_amps()
     ChargeControl1 reg{raw_value};
 
     // Set and clear operations can be chained as well:
-    reg.clear<charge_control1::icc>().set<charge_control1::icc>(0b11001); // EN_NTC and IPRE stays the same
+    reg.clear<charge_control1::icc>().set<charge_control1::icc>(0b11001); // EN_NTC and IPRE stay the same
 
     mp2695_on_i2c_interface.write(charge_control1_register_address, reg()); 
 }
