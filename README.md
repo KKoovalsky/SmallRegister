@@ -82,6 +82,8 @@ Status status_reg{};
 status_reg.get<fault::chg_fault>(); // ERROR: "Bitfield ID not found"
 ``` 
 
+The same goes for any other member function.
+
 When you want to set some configuration from scratch; for `REG 0x01H`, in the MP2695 IC:
 
 ![mp2695 Charge Control 1 register](docs/mp2695_charge_control_1_register.png)
@@ -181,7 +183,7 @@ void MP2695::change_charge_current_to_3_amps()
 ```
 
 Be careful when using `set` and `clear` functions with explicit bitfield values, because when the value doesn't match, 
-e.g. when the bitfield is of size 5 bits and you want to set 6 bits an exception is thrown:
+e.g. when the bitfield is of size 5 bits and you want to set 6 bits, an exception is thrown:
 
 ```
 ChargeControl1 charge_control1_reg{};
@@ -226,11 +228,18 @@ FetchContent_MakeAvailable(SmallRegister)
 target_link_libraries(your_app PUBLIC SmallRegister)
 ```
 
-You can use the library as a submodule as well or simply download the headers insided `small_register` directory.
+You can use the library as a submodule as well or simply download the headers from `small_register` directory.
 
 ## API
 
 TODO: generate with `doxygen` and use `moxygen`
 
+## Running tests
 
-
+```
+mkdir build
+cd build
+cmake -DSMALL_REGISTERS_ENABLE_TESTING:BOOL=ON ..
+make
+ctest
+```
