@@ -66,7 +66,7 @@ Sets all the bits of the bitfield to ones.
 Sets the bitfield to a specified value, that is equivalent to "|= value" operation on the bitfield.
 
 #### Exceptions
-* `[overflow_error](#structjungles_1_1small__register_1_1overflow__error)` when value is bigger than the maximum value the bitfield can store.
+* [overflow_error](#structjungles_1_1small__register_1_1overflow__error) when value is bigger than the maximum value the bitfield can store.
 
 #### `public template<>`  <br/>`inline constexpr RegisterUnderlyingType `[`get`](#classjungles_1_1small__register_1aa8d6d598082926ac85c569b0b3a1c468)`()` 
 
@@ -81,7 +81,7 @@ Clears the whole bitfield (sets all bits to zeros).
 Clears the bitfield applying the mask. That is equivalent to "&= ~(mask)" operation on the bitfield.
 
 #### Exceptions
-* `[mask_not_matching_error](#structjungles_1_1small__register_1_1mask__not__matching__error)` when mask is bigger than the maximum value the bitfield can store.
+* [mask_not_matching_error](#structjungles_1_1small__register_1_1mask__not__matching__error) when mask is bigger than the maximum value the bitfield can store.
 
 #### `public inline constexpr RegisterUnderlyingType `[`operator()`](#classjungles_1_1small__register_1a687f7954d4635435981df244456a1618)`() const` 
 

@@ -15,6 +15,7 @@ namespace jungles
 
 /**
  * \brief Describes a bitfield.
+ * \note Must be used as an input to jungles:small_register template instantiation.
  * \tparam Id Should be an ID which is a number or enumeration.
  * \tparam Size Bit-size of the bitfield.
  */

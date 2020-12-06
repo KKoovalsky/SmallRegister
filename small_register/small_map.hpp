@@ -19,6 +19,8 @@ namespace jungles
 /**
  * Element of the map that relates the Address to a type SmallRegister which shall be a template instance
  * of jungles::small_register.
+ *
+ * \note Must be used as an input to jungles:small_map template instantiation.
  */
 template<auto Address, typename SmallRegister>
 struct element
@@ -28,7 +30,7 @@ struct element
 };
 
 /**
- * \brief Maps values to specific jungles::small_register instances.
+ * \brief Maps values to specific jungles::small_register template instances.
  * \tparam Elements Multiple jungles::element which are elements of the map.
  */
 template<typename... Elements>
