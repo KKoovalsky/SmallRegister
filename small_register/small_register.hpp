@@ -13,6 +13,11 @@
 namespace jungles
 {
 
+/**
+ * \brief Describes a bitfield.
+ * \tparam Id Should be an ID which is a number or enumeration.
+ * \tparam Size Bit-size of the bitfield.
+ */
 template<auto Id, unsigned Size>
 struct bitfield
 {
@@ -20,6 +25,25 @@ struct bitfield
     static inline constexpr auto size{Size};
 };
 
+/**
+ * \brief Simplifies bitfield handling and adds safe checks. Bitfields are in Big Endian order.
+ * \tparam RegisterUnderlyingType Underlying type of the register, which determines its size.
+ *                                Use e.g. uint8_t, uint16_t, uint32_t ...
+ * \tparam Bitfields jungles::bitfield template instances that describe the layout of the register.
+ *
+ * \note There are a few static assertions performed when instantiating the template:
+ * - Bitfield IDs shall be unique. Compiler raises "Bitfield IDs must be unique" otherwise.
+ * - The bitfields shall give in total the bitsize of the RegisterUnderlyingType bitsize. Otherwise compiler
+ *   raises "Whole register must be allocated" error. If there are unused bits then use e.g.
+ *   bitfield<reg1::unused, 3>
+ * - The types of bitfield IDs shall be the same. So using various "enum class" types will not work. Otherwise
+ *   compiler raises "bitfield::id types shall be the same".
+ * - When using methods a template parameter which is the bitfield ID is needed. When specyfying wrong ID (one which
+ *   was not registered through template instantiation then a compiler error is thrown: "Bitfield ID not found"
+ *
+ * All the mutating methods like set(), clear(), ... return reference to self so the mutating opperations can
+ * be chained: "r.set<id1>().clear<id2>().set<id3>()"
+ */
 template<typename RegisterUnderlyingType, typename... Bitfields>
 class small_register
 {
@@ -71,10 +95,15 @@ class small_register
     }
 
   public:
+    /**
+     * Constructs the register with initial_value that is mapped to the defined bitfields. Initial value is zero
+     * if not specified.
+     */
     constexpr small_register(Register initial_value = 0) : underlying_register{initial_value}
     {
     }
 
+    //! Sets all the bits of the bitfield to ones.
     template<auto Id>
     constexpr inline Self& set()
     {
@@ -82,6 +111,10 @@ class small_register
         return set<Id>(value);
     }
 
+    /**
+     * \brief Sets the bitfield to a specified value, that is equivalent to "|= value" operation on the bitfield.
+     * \throws overflow_error when value is bigger than the maximum value the bitfield can store.
+     */
     template<auto Id>
     constexpr inline Self& set(RegisterUnderlyingType value)
     {
@@ -94,6 +127,7 @@ class small_register
         return *this;
     }
 
+    //! Returns the value of the specified bitfield.
     template<auto Id>
     constexpr inline RegisterUnderlyingType get()
     {
@@ -102,6 +136,7 @@ class small_register
         return (underlying_register >> shift) & mask;
     }
 
+    //! Clears the whole bitfield (sets all bits to zeros).
     template<auto Id>
     constexpr inline Self& clear()
     {
@@ -109,6 +144,10 @@ class small_register
         return clear<Id>(mask);
     }
 
+    /**
+     * \brief Clears the bitfield applying the mask. That is equivalent to "&= ~(mask)" operation on the bitfield.
+     * \throws mask_not_matching_error when mask is bigger than the maximum value the bitfield can store.
+     */
     template<auto Id>
     constexpr inline Self& clear(RegisterUnderlyingType mask)
     {
@@ -121,6 +160,7 @@ class small_register
         return *this;
     }
 
+    //! Returns the underlying value.
     constexpr RegisterUnderlyingType operator()() const
     {
         return underlying_register;

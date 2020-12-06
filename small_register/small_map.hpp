@@ -16,6 +16,10 @@
 namespace jungles
 {
 
+/**
+ * Element of the map that relates the Address to a type SmallRegister which shall be a template instance
+ * of jungles::small_register.
+ */
 template<auto Address, typename SmallRegister>
 struct element
 {
@@ -23,6 +27,10 @@ struct element
     using Register = SmallRegister;
 };
 
+/**
+ * \brief Maps values to specific jungles::small_register instances.
+ * \tparam Elements Multiple jungles::element which are elements of the map.
+ */
 template<typename... Elements>
 struct small_map
 {
@@ -31,6 +39,10 @@ struct small_map
     static inline constexpr std::tuple<typename Elements::Register...> registers = {};
 
   public:
+    /**
+     * \brief Performs the mapping at compile time. Use register_from_address::type alias to obtain the type.
+     * \tparam Register address (the value) that is key to obtain the type for that register address.
+     */
     template<auto Address>
     struct register_from_address
     {

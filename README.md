@@ -6,7 +6,8 @@ operations.
 
 C++17 is required to use it. The library is header-only.
 
-It's intended to be used with tiny sensor ICs from which the data is obtained through I2C, SPI, UART, ...
+It's intended to be used with tiny sensor ICs from which the data is obtained through I2C, SPI, UART, ... It could
+be used to handle protocol header formatting as well.
 
 As an example consider that you have to implement handling of a temperature, humidity sensor, or an external ADC, or 
 an external GPIO expander, etc... You wire it to your ESP32, STM32, AVR, ... using I2C, SPI, UART, ...
