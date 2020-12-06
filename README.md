@@ -233,7 +233,7 @@ You can use the library as a submodule as well or simply download the headers fr
 
 ## API
 
-TODO: generate with `doxygen` and use `moxygen`
+[API documentation](docs/api.md)
 
 ## Running tests
 
