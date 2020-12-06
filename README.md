@@ -14,6 +14,13 @@ an external GPIO expander, etc... You wire it to your ESP32, STM32, AVR, ... usi
 You want to have easy access to the bitfields obtained over the wire. This is when `SmallRegister` comes in and can
 solve your problem.
 
+## Why you should consider using SmallRegister instead of raw bitwise operations
+
+* Big Endian portable support.
+* Safety compile-time checks for types, bitfield existence and overflows.
+* No manual handling of bits. All the operations are performed through methods.
+* Interface that allows to create clean code.
+
 ## Tutorial
 
 Let's take [MP2695](https://www.monolithicpower.com/en/mp2695.html) IC on the table. It is a:
