@@ -17,6 +17,7 @@ solve your problem.
 ## Why you should consider using SmallRegister instead of raw bitwise operations
 
 * Big Endian portable support.
+* Padding problem eliminated with enforcing whole register allocation.
 * Safety compile-time checks for types, bitfield existence and overflows.
 * No manual handling of bits. All the operations are performed through methods.
 * Interface that allows to create clean code.
