@@ -1,3 +1,9 @@
+global !p
+
+from snippet_helpers import *
+
+endglobal
+
 snippet fdoxy
 /**
  * @file	${1:`!p snip.rv = snip.fn or "filename"`}
@@ -106,26 +112,28 @@ ${VISUAL}$0
 #endif /* $2 */
 endsnippet
 
-snippet hppfiletemplate
+snippet hppfiletemplate "Template for header file"
 /**
- * @file	${1:`!v vim_snippets#Filename('$1.hpp', 'title')`}
- * @brief	$3
- * @author	Kacper Kowalski - $4
+ * @file        `!p snip.rv = fn`
+ * @brief       $1
+ * @author      Kacper Kowalski - $2
  */
+#ifndef `!p snip.rv = to_include_guard(fn)`
+#define `!p snip.rv = to_include_guard(fn)`
 
-#ifndef ${2:`!p
-if not snip.c:
-	import string
-	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
-	snip.rv = ('%s' % (name)).upper()
-else:
-	snip.rv = snip.c`}
-#define $2
+class $3
+{
+  public:
+    explicit $3($4);
+    $0
 
-${VISUAL}$0
+  private:
 
-#endif /* $2 */
+};
+
+#endif /* `!p snip.rv = to_include_guard(fn)` */
 endsnippet
+
 snippet ctestfiletemplate
 /**
  * @file	${1:`!v vim_snippets#Filename('$1.', 'title')`}`!v expand('%:e')`
@@ -317,6 +325,10 @@ snippet mailprivate
 kacper.s.kowalski@gmail.com
 endsnippet
 
+snippet mailhum
+kacper.kowalski@hum-systems.com
+endsnippet
+
 snippet unittestdecl
 static void UNIT_TEST_$0();
 endsnippet
@@ -337,4 +349,30 @@ $1(const $1 &) = delete;
 $1 &operator=(const $1 &) = delete;
 $1($1 &&) = delete;
 $1 &operator=($1 &&) = delete;
+endsnippet
+
+snippet iface "C++ interface"
+struct $1
+{
+    $0
+    virtual ~$1() = default;
+};
+endsnippet
+
+snippet clas "C++ class"
+class $1
+{
+  public:
+    explicit $1($2)$0
+
+  private:
+};
+endsnippet
+
+snippet ctor "Class constructor" "True" e
+${1:explicit} `!p snip.rv = get_class_name_from_few_previous_lines(snip.buffer, vim.current.window.cursor[0])`($2) $0
+endsnippet
+
+snippet ifacefun "C++ interface function"
+virtual $1 $2($3) = 0;
 endsnippet

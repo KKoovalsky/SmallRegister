@@ -52,8 +52,6 @@ set smarttab
 
 :imap jk <Esc>
 
-let g:netrw_banner = 0
-
 " Set this shortcuts to easily navigate through panes
 nnoremap <c-j> <c-w><c-j>
 nnoremap <C-K> <C-W><C-K>
@@ -139,7 +137,6 @@ hi HighlightedyankRegion cterm=reverse gui=reverse ctermfg=187
 
 " Highlight search result
 :set hlsearch
-hi Search ctermbg=lightblue
 
 " Show filename in statusline
 :set statusline=%f
@@ -188,3 +185,17 @@ let @b = 'V}:s/;/{}\r/g:ClangFormat'
 
 let g:autopep8_ignore="E402"
 let g:syntastic_python_flake8_args='--ignore=E402'
+
+function MakeCppClassFiles(name_no_extension)
+    let path = b:netrw_curdir . '/' . a:name_no_extension
+    let header_path = path . '.hpp'
+    let source_path = path . '.cpp'
+    execute 'args ' . header_path . ' ' source_path . ' | vert all'
+    startinsert
+endfunction
+
+py3 from cpp_helpers import * 
+
+command -nargs=1 MakeCppClassFiles call MakeCppClassFiles(<f-args>)
+command FillCorrespondingCppClassSourceFile py3 fill_corresponding_cpp_class_source_file()
+
