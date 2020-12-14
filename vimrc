@@ -199,3 +199,9 @@ py3 from cpp_helpers import *
 command -nargs=1 MakeCppClassFiles call MakeCppClassFiles(<f-args>)
 command FillCorrespondingCppClassSourceFile py3 fill_corresponding_cpp_class_source_file()
 
+function FindOccurences()
+    let current_word = expand("<cword>")
+    execute ':AsyncRun git grep -rne ' . current_word . ' --recurse-submodules -- *.{c,cpp,cxx,h,hpp,hxx}'
+endfunction
+
+command FindOccurences call FindOccurences()
