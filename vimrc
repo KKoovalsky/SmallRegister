@@ -199,9 +199,15 @@ py3 from cpp_helpers import *
 command -nargs=1 MakeCppClassFiles call MakeCppClassFiles(<f-args>)
 command FillCorrespondingCppClassSourceFile py3 fill_corresponding_cpp_class_source_file()
 
-function FindOccurences()
-    let current_word = expand("<cword>")
-    execute ':AsyncRun git grep -rne ' . current_word . ' --recurse-submodules -- *.{c,cpp,cxx,h,hpp,hxx}'
+function FindOccurences(symbol)
+    execute ':AsyncRun git grep -rne ' . a:symbol . ' --recurse-submodules -- *.{c,cpp,cxx,h,hpp,hxx}'
 endfunction
 
-command FindOccurences call FindOccurences()
+function FindOccurencesOfSymbolUnderCursor()
+    let current_word = expand("<cword>")
+    call FindOccurences(current_word)
+endfunction
+
+command FindOccurences call FindOccurencesOfSymbolUnderCursor()
+command -nargs=1 SearchOccurences call FindOccurences(<f-args>)
+command FindReferences YcmCompleter GoToReferences
