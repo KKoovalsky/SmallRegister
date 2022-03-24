@@ -1,5 +1,10 @@
 # SmallRegister
 
+**Check out the reforged version of the library which is:**
+[Portable Bitfields library](https://github.com/KKoovalsky/portablebitfields).
+
+---
+
 This library simplifies bitfield handling and adds some safety features, mostly relying on compile-time checks.
 `SmallRegister` maps bitfields of registers in Big Endian order and allows easy read-out and setting/clearing 
 operations.
